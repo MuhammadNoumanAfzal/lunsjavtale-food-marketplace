@@ -284,7 +284,6 @@ function OtherFiltersModal({ otherFilters, setOtherFilters, onClose }) {
 export default function BrowseFilterBar({
   variant = "default",
   onControlInteract,
-  disabled = false,
 }) {
   const [activeFilters, setActiveFilters] = useState([]);
   const [openDropdown, setOpenDropdown] = useState(null);
@@ -340,10 +339,6 @@ export default function BrowseFilterBar({
   };
 
   const handleChipClick = (chipKey) => {
-    if (disabled) {
-      return;
-    }
-
     onControlInteract?.();
 
     if (DROPDOWN_CHIP_KEYS.has(chipKey)) {
@@ -373,14 +368,12 @@ export default function BrowseFilterBar({
             return (
               <div key={chip.key} className="relative w-full sm:w-auto">
                 <button
-                  type="button"
-                  disabled={disabled}
                   onClick={() => handleChipClick(chip.key)}
-                  className={`type-subpara inline-flex h-10 w-full items-center justify-between gap-3 rounded-full border px-4 transition sm:min-w-[190px] sm:px-6 ${
+                  className={`type-subpara cursor-pointer inline-flex h-10 w-full items-center justify-between gap-3 rounded-full border px-4 transition sm:min-w-[190px] sm:px-6 ${
                     isActive
                       ? "border-[#c6a343] bg-[#fff8dd] text-[#4e4e4e]"
                       : styles.inactiveChipClassName
-                  } ${disabled ? "cursor-not-allowed opacity-60" : "cursor-pointer"}`}
+                  }`}
                 >
                   <span className="flex w-3 justify-center">
                     {chip.icon === "star" ? (
@@ -526,16 +519,10 @@ export default function BrowseFilterBar({
           })}
         </div>
 
-        <button
-          type="button"
-          disabled={disabled}
-          className={`${styles.applyButtonClassName} ${disabled ? "cursor-not-allowed opacity-60" : ""}`}
-        >
-          Apply
-        </button>
+        <button className={styles.applyButtonClassName}>Apply</button>
       </div>
 
-      {openDropdown === "other" && !disabled ? (
+      {openDropdown === "other" ? (
         <OtherFiltersModal
           otherFilters={otherFilters}
           setOtherFilters={setOtherFilters}

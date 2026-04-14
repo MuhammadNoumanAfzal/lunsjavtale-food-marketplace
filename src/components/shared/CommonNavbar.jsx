@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   FiChevronDown,
@@ -8,28 +8,99 @@ import {
   FiSearch,
   FiX,
 } from "react-icons/fi";
+import DeliveryDatePopover from "./navbar/DeliveryDatePopover";
+import EventDetailsPopover from "./navbar/EventDetailsPopover";
+import { formatNavbarDate } from "./navbar/navbarDateUtils";
 
 const dropdownOptions = {
   city: ["Bergen", "Oslo", "Stavanger", "Trondheim"],
-  time: ["Any time", "Morning", "Afternoon", "Evening"],
-  event: ["Event details", "Office lunch", "Birthday", "Wedding"],
 };
+
+function formatEventLabel(attendeeCount, eventName) {
+  if (eventName) {
+    return eventName;
+  }
+
+  if (attendeeCount > 0) {
+    return `${attendeeCount} attendees`;
+  }
+
+  return "Event details";
+}
 
 export default function CommonNavbar() {
   const [openDropdown, setOpenDropdown] = useState(null);
   const [selectedFilters, setSelectedFilters] = useState({
     city: "Bergen",
-    time: "Any time",
-    event: "Event details",
   });
   const [searchValue, setSearchValue] = useState("");
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState("");
+  const [draftDate, setDraftDate] = useState(new Date());
+  const [draftTime, setDraftTime] = useState("");
+  const [calendarMonth, setCalendarMonth] = useState(() => {
+    const today = new Date();
+    return new Date(today.getFullYear(), today.getMonth(), 1);
+  });
+  const [attendeeCount, setAttendeeCount] = useState(0);
+  const [eventName, setEventName] = useState("");
+  const [draftAttendeeCount, setDraftAttendeeCount] = useState(0);
+  const [draftEventName, setDraftEventName] = useState("");
+  const dropdownRef = useRef(null);
 
   const toggleDropdown = (key) => {
-    setOpenDropdown((current) => (current === key ? null : key));
+    setOpenDropdown((current) => {
+      const nextDropdown = current === key ? null : key;
+
+      if (nextDropdown === "delivery") {
+        const nextDate = selectedDate ?? new Date();
+        setDraftDate(nextDate);
+        setDraftTime(selectedTime);
+        setCalendarMonth(
+          new Date(nextDate.getFullYear(), nextDate.getMonth(), 1),
+        );
+      }
+
+      if (nextDropdown === "event") {
+        setDraftAttendeeCount(attendeeCount);
+        setDraftEventName(eventName);
+      }
+
+      return nextDropdown;
+    });
   };
 
   const handleSelect = (key, value) => {
     setSelectedFilters((current) => ({ ...current, [key]: value }));
+    setOpenDropdown(null);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!dropdownRef.current?.contains(event.target)) {
+        setOpenDropdown(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const deliveryLabel = formatNavbarDate(selectedDate, selectedTime);
+  const eventLabel = formatEventLabel(attendeeCount, eventName);
+
+  const applyDeliverySelection = () => {
+    setSelectedDate(draftDate);
+    setSelectedTime(draftTime);
+    setOpenDropdown(null);
+  };
+
+  const applyEventDetails = () => {
+    setAttendeeCount(draftAttendeeCount);
+    setEventName(draftEventName.trim());
     setOpenDropdown(null);
   };
 
@@ -46,7 +117,7 @@ export default function CommonNavbar() {
 
         <div className="hidden min-w-0 items-center justify-self-center lg:flex">
           <div className="flex items-center gap-2">
-            <div className="relative">
+            <div ref={dropdownRef} className="relative">
               <div className="flex h-8 items-center overflow-hidden rounded-full border border-[#d9d1c7] bg-white">
                 <button
                   type="button"
@@ -62,11 +133,11 @@ export default function CommonNavbar() {
 
                 <button
                   type="button"
-                  onClick={() => toggleDropdown("time")}
+                  onClick={() => toggleDropdown("delivery")}
                   className="type-subpara flex h-full items-center gap-1.5 px-3 text-[#5d5d5d]"
                 >
                   <FiCalendar className="text-[14px] text-[#8f8f8f]" />
-                  <span className="text-[16px]">{selectedFilters.time}</span>
+                  <span className="text-[16px]">{deliveryLabel}</span>
                   <FiChevronDown className="text-[10px] text-[#8f8f8f]" />
                 </button>
 
@@ -77,13 +148,48 @@ export default function CommonNavbar() {
                   onClick={() => toggleDropdown("event")}
                   className="type-subpara flex h-full items-center gap-1.5 px-3 text-[#5d5d5d]"
                 >
-                  <span className="text-[16px]">{selectedFilters.event}</span>
+                  <span className="text-[16px]">{eventLabel}</span>
                   <FiChevronDown className="text-[10px] text-[#8f8f8f]" />
                 </button>
               </div>
 
-              {openDropdown ? (
-                <div className="absolute left-0 top-[calc(100%+8px)] z-50 min-w-[580px] rounded-2xl border border-[#ece7df] bg-white p-2 shadow-lg">
+              {openDropdown === "delivery" ? (
+                <DeliveryDatePopover
+                  calendarMonth={calendarMonth}
+                  draftDate={draftDate}
+                  draftTime={draftTime}
+                  onApply={applyDeliverySelection}
+                  onDateSelect={setDraftDate}
+                  onMonthChange={(direction) =>
+                    setCalendarMonth(
+                      (current) =>
+                        new Date(
+                          current.getFullYear(),
+                          current.getMonth() + direction,
+                          1,
+                        ),
+                    )
+                  }
+                  onTimeSelect={setDraftTime}
+                />
+              ) : null}
+
+              {openDropdown === "event" ? (
+                <EventDetailsPopover
+                  attendeeCount={draftAttendeeCount}
+                  eventName={draftEventName}
+                  onApply={applyEventDetails}
+                  onAttendeeChange={(change) =>
+                    setDraftAttendeeCount((current) =>
+                      Math.max(0, current + change),
+                    )
+                  }
+                  onEventNameChange={setDraftEventName}
+                />
+              ) : null}
+
+              {openDropdown && openDropdown !== "delivery" && openDropdown !== "event" ? (
+                <div className="absolute left-0 top-[calc(100%+8px)] z-50 min-w-[220px] rounded-2xl border border-[#ece7df] bg-white p-2 shadow-lg">
                   {dropdownOptions[openDropdown].map((option) => (
                     <button
                       key={option}

@@ -13,7 +13,7 @@ export default function BrowseCatalogView({ categories, menuItems, moreOptions }
     <section className="w-full px-4 py-12 ">
       <BrowseTabs />
       <BrowseCategoryStrip categories={categories} moreOptions={moreOptions} />
-      <BrowseFilterBar disabled />
+      <BrowseFilterBar />
       <BrowseMenuSection title="Menu" items={menuItems} />
     </section>
   );

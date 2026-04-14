@@ -1,5 +1,7 @@
 import { FiStar } from "react-icons/fi";
 import { LiaBicycleSolid } from "react-icons/lia";
+import { useNavigate } from "react-router-dom";
+import { getMenuSlugByRestaurantName } from "../../menu/data/menuData";
 
 function VendorItem({
   image,
@@ -9,8 +11,18 @@ function VendorItem({
   deliveryFee,
   discount,
 }) {
+  const navigate = useNavigate();
+  const menuSlug = getMenuSlugByRestaurantName(name);
+
   return (
-    <article className="group cursor-pointer">
+    <article
+      className="group cursor-pointer"
+      onClick={() => {
+        if (menuSlug) {
+          navigate(`/menu/${menuSlug}`);
+        }
+      }}
+    >
       <div className="overflow-hidden rounded-[22px] bg-[#f2f2f2]">
         <img
           src={image}

@@ -115,6 +115,7 @@ export const featuredVendors = [
 export const popularProducts = [
   {
     id: 1,
+    slug: "max-egertorget-burger-box",
     name: "Max - Egertorget",
     image: "/home/hero1.jpg",
     rating: 3.9,
@@ -124,6 +125,7 @@ export const popularProducts = [
   },
   {
     id: 2,
+    slug: "fly-chicken-sharing-meal",
     name: "Fly Chicken - Steen...",
     image: "/home/hero3.jpg",
     rating: 4.9,
@@ -133,6 +135,7 @@ export const popularProducts = [
   },
   {
     id: 3,
+    slug: "dominos-pizza-party-pack",
     name: "Domino's Pizza Sto...",
     image: "/home/hero2.jpg",
     rating: 4.5,
@@ -142,6 +145,7 @@ export const popularProducts = [
   },
   {
     id: 4,
+    slug: "dominos-pizza-lunch-box",
     name: "Domino's Pizza Sto...",
     image: "/home/hero1.jpg",
     rating: 4.5,

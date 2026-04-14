@@ -33,6 +33,7 @@ export const browseFilterChips = [
 export const foodTypeMenuItems = [
   {
     id: 1,
+    slug: "grilled-mixed-platter",
     title: "Grilled Mixed Platter",
     vendor: "By The Queen's Kebab",
     image: "/home/hero1.jpg",
@@ -41,6 +42,7 @@ export const foodTypeMenuItems = [
   },
   {
     id: 2,
+    slug: "lunch-sharing-trays",
     title: "Lunch Sharing Trays",
     vendor: "By Talormade Bispevika",
     image: "/home/hero2.jpg",
@@ -49,6 +51,7 @@ export const foodTypeMenuItems = [
   },
   {
     id: 3,
+    slug: "stone-oven-pizza-box",
     title: "Stone Oven Pizza Box",
     vendor: "By Brobekk Grill & Pizza",
     image: "/home/hero3.jpg",
@@ -57,6 +60,7 @@ export const foodTypeMenuItems = [
   },
   {
     id: 4,
+    slug: "sweet-breakfast-basket",
     title: "Sweet Breakfast Basket",
     vendor: "By Morning Bite Cafe",
     image: "/home/v.jpg",
@@ -65,6 +69,7 @@ export const foodTypeMenuItems = [
   },
   {
     id: 5,
+    slug: "salad-bowl-trio",
     title: "Salad Bowl Trio",
     vendor: "By Urban Salad Kitchen",
     image: "/home/hero2.jpg",
@@ -73,6 +78,7 @@ export const foodTypeMenuItems = [
   },
   {
     id: 6,
+    slug: "nordic-dinner-combo",
     title: "Nordic Dinner Combo",
     vendor: "By Golden Fork Kitchen",
     image: "/home/hero1.jpg",
@@ -81,6 +87,7 @@ export const foodTypeMenuItems = [
   },
   {
     id: 7,
+    slug: "chicken-wrap-feast",
     title: "Chicken Wrap Feast",
     vendor: "By Oslo Wrap House",
     image: "/home/hero3.jpg",
@@ -89,6 +96,7 @@ export const foodTypeMenuItems = [
   },
   {
     id: 8,
+    slug: "office-pizza-bundle",
     title: "Office Pizza Bundle",
     vendor: "By Pizza Corner",
     image: "/home/hero2.jpg",
@@ -97,6 +105,7 @@ export const foodTypeMenuItems = [
   },
   {
     id: 9,
+    slug: "breakfast-mini-box",
     title: "Breakfast Mini Box",
     vendor: "By Eckers Frogner",
     image: "/home/v.jpg",
@@ -108,6 +117,7 @@ export const foodTypeMenuItems = [
 export const occasionMenuItems = [
   {
     id: 1,
+    slug: "wedding-dessert-table",
     title: "Wedding Dessert Table",
     vendor: "By Golden Fork Kitchen",
     image: "/home/hero2.jpg",
@@ -116,6 +126,7 @@ export const occasionMenuItems = [
   },
   {
     id: 2,
+    slug: "birthday-snack-tower",
     title: "Birthday Snack Tower",
     vendor: "By Talormade Bispevika",
     image: "/home/v.jpg",
@@ -124,6 +135,7 @@ export const occasionMenuItems = [
   },
   {
     id: 3,
+    slug: "corporate-dinner-spread",
     title: "Corporate Dinner Spread",
     vendor: "By Nordic Lunch House",
     image: "/home/hero3.jpg",
@@ -132,6 +144,7 @@ export const occasionMenuItems = [
   },
   {
     id: 4,
+    slug: "anniversary-sharing-menu",
     title: "Anniversary Sharing Menu",
     vendor: "By Flint's Grill",
     image: "/home/hero1.jpg",
@@ -140,6 +153,7 @@ export const occasionMenuItems = [
   },
   {
     id: 5,
+    slug: "graduation-party-tray",
     title: "Graduation Party Tray",
     vendor: "By Pizza Corner",
     image: "/home/hero2.jpg",
@@ -148,6 +162,7 @@ export const occasionMenuItems = [
   },
   {
     id: 6,
+    slug: "weekend-family-buffet",
     title: "Weekend Family Buffet",
     vendor: "By The Queen's Kebab",
     image: "/home/hero1.jpg",
@@ -156,6 +171,7 @@ export const occasionMenuItems = [
   },
   {
     id: 7,
+    slug: "team-celebration-pack",
     title: "Team Celebration Pack",
     vendor: "By Brobekk Grill & Pizza",
     image: "/home/hero3.jpg",
@@ -164,6 +180,7 @@ export const occasionMenuItems = [
   },
   {
     id: 8,
+    slug: "premium-event-platters",
     title: "Premium Event Platters",
     vendor: "By Morning Bite Cafe",
     image: "/home/v.jpg",
@@ -172,6 +189,7 @@ export const occasionMenuItems = [
   },
   {
     id: 9,
+    slug: "cocktail-bites-selection",
     title: "Cocktail Bites Selection",
     vendor: "By Urban Salad Kitchen",
     image: "/home/hero2.jpg",
