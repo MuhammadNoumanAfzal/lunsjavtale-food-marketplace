@@ -27,6 +27,7 @@ export default function HomePage() {
       <ProductShowcaseSection
         title="Popular Products"
         products={popularProducts}
+        seeAllHref="/products/popular"
       />
       <HowItWorksSection />
     </div>

@@ -173,3 +173,16 @@ export function getVendorCollectionBySlug(slug) {
 
   return collections[slug] ?? null;
 }
+
+export function getProductCollectionBySlug(slug) {
+  const collections = {
+    popular: {
+      title: "Popular Products",
+      description:
+        "Browse the products customers order most often for quick meals, team lunches, and everyday cravings.",
+      products: popularProducts,
+    },
+  };
+
+  return collections[slug] ?? null;
+}

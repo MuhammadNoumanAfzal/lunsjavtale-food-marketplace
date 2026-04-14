@@ -52,7 +52,7 @@ export default function HeroSection() {
 
           <div className="relative mx-auto flex w-full max-w-[560px] items-center justify-center">
             <div className="relative h-[320px] w-full sm:h-[420px] lg:h-[500px]">
-              <div className="absolute left-[2%] top-[6%] h-[140px] w-[180px] overflow-hidden rounded-[28px] shadow-xl sm:h-[180px] sm:w-[230px] lg:h-[210px] lg:w-[250px]">
+              <div className="absolute left[20%] -lg:left-[0%] top-[6%] h-[140px] w-[180px] overflow-hidden rounded-[28px] shadow-xl sm:h-[180px] sm:w-[230px] lg:h-[250px] lg:w-[260px]">
                 <img
                   src="/home/hero1.jpg"
                   alt="Food platter"
@@ -60,7 +60,7 @@ export default function HeroSection() {
                 />
               </div>
 
-              <div className="absolute right-[0%] top-[18%] z-[10] h-[150px] w-[190px] overflow-hidden rounded-[30px] shadow-xl sm:h-[200px] sm:w-[240px] lg:h-[220px] lg:w-[255px]">
+              <div className="absolute -right-[1%] top-[18%] z-[10] h-[150px] w-[190px] overflow-hidden rounded-[30px] shadow-xl sm:h-[200px] sm:w-[240px] lg:h-[250px] lg:w-[250px]">
                 <img
                   src="/home/hero2.jpg"
                   alt="Meal dishes"
@@ -69,7 +69,7 @@ export default function HeroSection() {
               </div>
 
               <div
-                className="absolute left-[53%] bottom-[0%] h-[150px] w-[205px] -translate-x-1/2 overflow-hidden filter drop-shadow-xl sm:h-[200px] sm:w-[250px] lg:h-[230px] lg:w-[270px]"
+                className="absolute left-[50%] -bottom-[10%] h-[150px] w-[205px] -translate-x-1/2 overflow-hidden filter drop-shadow-xl sm:h-[200px] sm:w-[250px] lg:h-[260px] lg:w-[290px]"
                 style={{ clipPath: "url(#liquidNotch)" }}
               >
                 <img
@@ -79,8 +79,8 @@ export default function HeroSection() {
                 />
               </div>
 
-              <div className="absolute right-[30%] top-[10%] z-[100] flex h-20 w-20 -translate-x-1/2 items-center justify-center rounded-full border-[10px] border-white bg-[#c85f33] text-white shadow-2xl sm:h-24 sm:w-24">
-                <FiArrowDownLeft className="text-3xl sm:text-4xl" />
+              <div className="absolute right-[30%] top-[8%] z-[100] flex h-22 w-22 -translate-x-1/2 items-center justify-center rounded-full border-[10px]  bg-[#c85f33] text-[#c85f33] shadow-2xl sm:h-24 sm:w-24">
+                <FiArrowDownLeft className="text-3xl sm:text-4xl text-white" />
               </div>
             </div>
           </div>

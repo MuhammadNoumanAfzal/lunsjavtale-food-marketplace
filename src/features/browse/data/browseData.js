@@ -7,17 +7,27 @@ export const foodTypeCategories = [
   { name: "Breakfast", icon: "/home/breakfast.svg" },
   { name: "Hot Meal", icon: "/home/hotMeal.svg" },
   { name: "Salad", icon: "/home/salad.svg" },
-  { name: "Meeting Packages", icon: "/home/meetingPackages.svg" },
-  { name: "Pizza", icon: "/home/pizza.svg" },
+  { name: " Packages", icon: "/home/meetingPackages.svg" },
+  { name: "Asian", icon: "/home/hotMeal.svg" },
+  { name: "BBQ", icon: "/home/hotMeal.svg" },
+  { name: "Healthy", icon: "/home/salad.svg" },
+  { name: "Italian", icon: "/home/pizza.svg" },
+  
+  
   { name: "More", icon: null },
 ];
 
 export const occasionCategories = [
-  { name: "Anniversary", icon: "/home/breakfast.svg" },
+  { name: "Breakfast", icon: "/home/breakfast.svg" },
   { name: "Birthday", icon: "/home/hotMeal.svg" },
-  { name: "Wedding", icon: "/home/salad.svg" },
-  { name: "Graduation", icon: "/home/meetingPackages.svg" },
-  { name: "Office Party", icon: "/home/pizza.svg" },
+ 
+  { name: "Baby ", icon: "/home/breakfast.svg" },
+  { name: " Meeting", icon: "/home/meetingPackages.svg" },
+  { name: "Conference", icon: "/home/meetingPackages.svg" },
+  { name: "Networking", icon: "/home/salad.svg" },
+  { name: " Party", icon: "/home/pizza.svg" },
+
+  { name: "Reception", icon: "/home/pizza.svg" },
   { name: "More", icon: null },
 ];
 
@@ -262,7 +272,12 @@ export const sortByOptions = [
   "Fastest delivery",
 ];
 
-export const ratingOptions = ["5 or more", "4 or more", "3 or more", "2 or more"];
+export const ratingOptions = [
+  "5 or more",
+  "4 or more",
+  "3 or more",
+  "2 or more",
+];
 
 export const dietaryOptions = ["Vegetarian", "Vegan", "Halal", "Gluten-Free"];
 
@@ -272,7 +287,11 @@ export const offerOptions = [
   "Have a discount",
 ];
 
-export const pricingOptions = ["$1 budget-friendly", "$$ standard", "$$$ premium"];
+export const pricingOptions = [
+  "$(Budget-friendly)",
+  "$$(Standard)",
+  "$$$(Premium)",
+];
 
 export const orderMinimumOptions = [
   "Any price",

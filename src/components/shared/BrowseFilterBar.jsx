@@ -32,12 +32,12 @@ const createDefaultOtherFilters = () => ({
 const FILTER_BAR_VARIANTS = {
   default: {
     containerClassName:
-      "relative mt-5 flex flex-wrap items-center gap-2 xl:flex-nowrap xl:justify-between",
+      "relative mt-5 flex items-center gap-2",
     chipsWrapperClassName:
-      "grid w-full grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center xl:w-auto xl:flex-nowrap",
+      "flex min-w-0 flex-1 items-center gap-2",
     inactiveChipClassName: "border-[#ddd5cc] bg-white text-[#666666]",
     applyButtonClassName:
-      "type-h6 cursor-pointer ml-auto inline-flex h-10 items-center rounded-full bg-[#c96b33] px-10 text-white transition hover:bg-[#b85e2a]",
+      "type-h6 cursor-pointer inline-flex h-10 shrink-0 items-center rounded-full bg-[#c96b33] px-8 text-white transition hover:bg-[#b85e2a]",
   },
   preview: {
     containerClassName:
@@ -74,7 +74,7 @@ function MultiSelectIndicator({ isSelected }) {
     <span
       className={`flex h-3.5 w-3.5 items-center justify-center rounded border ${
         isSelected
-          ? "border-[#c85f33] bg-[#c85f33]"
+          ? "border-[#CF3A00] bg-[#CF3A00]"
           : "border-[#bcbcbc] bg-white"
       }`}
     >
@@ -103,10 +103,20 @@ function InlineSelectDropdown({
       <button
         type="button"
         onClick={onToggle}
-        className="type-subpara flex w-full items-center justify-between rounded-[2px] border border-[#cfcfcf] bg-white px-3 py-2 text-left text-black outline-none"
+        className={`type-subpara flex w-full items-center justify-between rounded-[2px] border bg-white px-3 py-2 text-left outline-none transition ${
+          value !== "Any price" && value !== "Any distance"
+            ? "border-[#CF3A00] text-[#CF3A00]"
+            : "border-[#cfcfcf] text-black"
+        }`}
       >
         <span>{value}</span>
-        <FiChevronDown className="text-[18px] text-[#666]" />
+        <FiChevronDown
+          className={`text-[18px] ${
+            value !== "Any price" && value !== "Any distance"
+              ? "text-[#CF3A00]"
+              : "text-[#666]"
+          }`}
+        />
       </button>
 
       {isOpen ? (
@@ -123,14 +133,14 @@ function InlineSelectDropdown({
                 onClick={() => onSelect(option)}
                 className={`type-subpara flex w-full items-center justify-between rounded-[6px] px-3 py-2 text-left transition ${
                   isSelected
-                    ? "bg-[#f5f5f5] text-black"
+                    ? "bg-[#fff1eb] text-[#CF3A00]"
                     : "text-black hover:bg-[#f7f2ec]"
                 }`}
               >
                 <span>{option}</span>
                 <span className="flex w-4 justify-center">
                   {isSelected ? (
-                    <FiCheck className="text-[14px] text-black" />
+                    <FiCheck className="text-[14px] text-[#CF3A00]" />
                   ) : null}
                 </span>
               </button>
@@ -164,7 +174,7 @@ function OtherFiltersModal({ otherFilters, setOtherFilters, onClose }) {
               onChange={(event) =>
                 updateOtherFilter("individualPackaging", event.target.checked)
               }
-              className="mt-1"
+              className="mt-1 h-4 w-4 accent-[#CF3A00]"
             />
             <span>
               <span className="type-para block text-black">
@@ -183,7 +193,7 @@ function OtherFiltersModal({ otherFilters, setOtherFilters, onClose }) {
               onChange={(event) =>
                 updateOtherFilter("newlyAdded", event.target.checked)
               }
-              className="mt-1"
+              className="mt-1 h-4 w-4 accent-[#CF3A00]"
             />
             <span>
               <span className="type-para block text-black">New</span>
@@ -200,7 +210,7 @@ function OtherFiltersModal({ otherFilters, setOtherFilters, onClose }) {
               onChange={(event) =>
                 updateOtherFilter("smallBusiness", event.target.checked)
               }
-              className="mt-1"
+              className="mt-1 h-4 w-4 accent-[#CF3A00]"
             />
             <span className="type-para text-black">Small business</span>
           </label>
@@ -214,7 +224,11 @@ function OtherFiltersModal({ otherFilters, setOtherFilters, onClose }) {
                 updateOtherFilter("budgetPerPerson", event.target.value)
               }
               placeholder="$"
-              className="type-subpara w-full rounded-[2px] border border-[#cfcfcf] px-3 py-2 outline-none"
+              className={`type-subpara w-full rounded-[2px] border px-3 py-2 outline-none transition ${
+                otherFilters.budgetPerPerson
+                  ? "border-[#CF3A00] text-[#CF3A00]"
+                  : "border-[#cfcfcf] text-black"
+              }`}
             />
           </div>
 
@@ -270,7 +284,7 @@ function OtherFiltersModal({ otherFilters, setOtherFilters, onClose }) {
             </button>
             <button
               onClick={onClose}
-              className="type-para cursor-pointer rounded-[6px] bg-[#c85f33] px-2 py-1 text-white"
+              className="type-para cursor-pointer rounded-[6px] bg-[#CF3A00] px-2 py-1 text-white"
             >
               Apply filter
             </button>
@@ -366,25 +380,27 @@ export default function BrowseFilterBar({
               (chip.key === "other" && otherFilterCount > 0);
 
             return (
-              <div key={chip.key} className="relative w-full sm:w-auto">
+              <div key={chip.key} className="relative min-w-0 flex-1">
                 <button
                   onClick={() => handleChipClick(chip.key)}
-                  className={`type-subpara cursor-pointer inline-flex h-10 w-full items-center justify-between gap-3 rounded-full border px-4 transition sm:min-w-[190px] sm:px-6 ${
+                  className={`type-subpara cursor-pointer inline-flex h-10 w-full items-center justify-between gap-2 rounded-full border px-3 transition xl:px-4 ${
                     isActive
-                      ? "border-[#c6a343] bg-[#fff8dd] text-[#4e4e4e]"
+                      ? "border-[#CF3A00] bg-[#fff1eb] text-[#CF3A00]"
                       : styles.inactiveChipClassName
                   }`}
                 >
-                  <span className="flex w-3 justify-center">
+                  <span className="flex w-3 shrink-0 justify-center">
                     {chip.icon === "star" ? (
                       <FiStar className="text-[11px] text-[#d5aa22]" />
                     ) : null}
                   </span>
 
-                  <span>{chipLabels[chip.key] ?? chip.label}</span>
+                  <span className="truncate">
+                    {chipLabels[chip.key] ?? chip.label}
+                  </span>
 
                   {isDropdownChip ? (
-                    <FiChevronDown className="text-[16px]" />
+                    <FiChevronDown className="shrink-0 text-[16px]" />
                   ) : null}
                 </button>
 
@@ -467,7 +483,7 @@ export default function BrowseFilterBar({
 
                 {chip.key === "offer" && openDropdown === "offer" ? (
                   <FilterDropdown
-                    minWidthClassName="min-w-[190px]"
+                    minWidthClassName="min-w-[250px]"
                     onClear={() => {
                       setSelectedOffers([]);
                       setOpenDropdown(null);

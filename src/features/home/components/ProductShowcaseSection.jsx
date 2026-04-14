@@ -1,8 +1,8 @@
 import { FiStar } from "react-icons/fi";
 import { LiaBicycleSolid } from "react-icons/lia";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-function ProductItem({
+export function ProductItem({
   image,
   name,
   rating,
@@ -50,19 +50,32 @@ function ProductItem({
   );
 }
 
-export default function ProductShowcaseSection({ title, products }) {
+export default function ProductShowcaseSection({ title, products, seeAllHref }) {
   return (
-    <section className="type-h3 px-4 py-6 sm:px-6 lg:px-8 bg-white">
-      {title ? (
-        <h2 className="mb-4 type-h3 font-semibold text-[#191919] sm:text-xl">
-          {title}
-        </h2>
-      ) : null}
+       <section className="bg-white px-8 py-6 sm:px-10 lg:px-20">
+      <div className="mx-auto w-full max-w-7xl">
+        {title ? (
+          <div className="mb-4 flex items-center justify-between gap-4">
+            <h2 className="type-h3 font-semibold text-[#191919] sm:text-xl">
+              {title}
+            </h2>
 
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {products.map((product) => (
-          <ProductItem key={product.id ?? product.name} {...product} />
-        ))}
+            {seeAllHref ? (
+              <Link
+                to={seeAllHref}
+                className="rounded-full border border-[#d7cec3] px-4 py-2 text-[13px] font-semibold text-[#2b2b2b] transition hover:border-[#c85f33] hover:text-[#c85f33]"
+              >
+                See all
+              </Link>
+            ) : null}
+          </div>
+        ) : null}
+
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {products.map((product) => (
+            <ProductItem key={product.id ?? product.name} {...product} />
+          ))}
+        </div>
       </div>
     </section>
   );
