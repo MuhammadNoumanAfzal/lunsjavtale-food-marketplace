@@ -46,7 +46,7 @@ export default function MenuDetailsPage() {
 
   return (
     <section className="bg-[#fffdfa] px-3 py-4 text-black sm:px-6 sm:py-8 lg:px-8">
-      <div className="mx-auto max-w-[1220px]">
+      <div className="">
         <div className="grid gap-5 lg:grid-cols-[minmax(0,1.35fr)_360px] lg:gap-8">
           <div>
             <MenuGallery
