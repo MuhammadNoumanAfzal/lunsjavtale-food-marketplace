@@ -10,6 +10,28 @@ function formatPriceValue(price) {
   return matched ? Number(matched[1]) : 199;
 }
 
+const browseAddOnTemplates = [
+  { title: "Fruit Platter", price: 49, image: "/home/v.jpg" },
+  { title: "Mini Desserts", price: 59, image: "/home/hero1.jpg" },
+  { title: "Soft Drinks", price: 39, image: "/home/hero2.jpg" },
+  { title: "Extra Sides", price: 45, image: "/home/hero3.jpg" },
+  { title: "Fresh Salad Bowl", price: 55, image: "/home/hero2.jpg" },
+  { title: "Garlic Bread", price: 35, image: "/home/hero1.jpg" },
+  { title: "Sauce Selection", price: 25, image: "/home/hero3.jpg" },
+  { title: "Dessert Box", price: 65, image: "/home/v.jpg" },
+];
+
+const homeAddOnTemplates = [
+  { title: "Dips", price: 29, image: "/home/hero1.jpg" },
+  { title: "Crispy Sides", price: 35, image: "/home/hero2.jpg" },
+  { title: "Dessert Cups", price: 45, image: "/home/hero3.jpg" },
+  { title: "Fresh Juice", price: 32, image: "/home/v.jpg" },
+  { title: "Mini Sandwiches", price: 52, image: "/home/hero2.jpg" },
+  { title: "Salad Tray", price: 49, image: "/home/hero1.jpg" },
+  { title: "Cookie Box", price: 38, image: "/home/hero3.jpg" },
+  { title: "Sparkling Water", price: 22, image: "/home/v.jpg" },
+];
+
 function createBrowseMenuDetail(item, index) {
   const basePrice = formatPriceValue(item.price);
   const vendor = normalizeVendor(item.vendor);
@@ -53,13 +75,10 @@ function createBrowseMenuDetail(item, index) {
     deliveryDate: "Dec 25, 2026",
     deliveryWindow: "3:15 PM - 3:45 PM",
     deliveryAddress: "1080 6th Ave W, Bergen",
-    addOns: [
-      { id: `${item.slug}-addon-1`, title: "Fruit platter", price: 49, image: "/home/v.jpg" },
-      { id: `${item.slug}-addon-2`, title: "Mini desserts", price: 59, image: "/home/hero1.jpg" },
-      { id: `${item.slug}-addon-3`, title: "Soft drinks", price: 39, image: "/home/hero2.jpg" },
-      { id: `${item.slug}-addon-4`, title: "Extra sides", price: 45, image: "/home/hero3.jpg" },
-      
-    ],
+    addOns: browseAddOnTemplates.map((addOn, addOnIndex) => ({
+      id: `${item.slug}-addon-${addOnIndex + 1}`,
+      ...addOn,
+    })),
   };
 }
 
@@ -104,11 +123,10 @@ function createHomeMenuDetail(item, index) {
     deliveryDate: "Dec 25, 2026",
     deliveryWindow: item.deliveryTime,
     deliveryAddress: "1080 6th Ave W, Bergen",
-    addOns: [
-      { id: `${item.slug}-addon-1`, title: "Dips", price: 29, image: "/home/hero1.jpg" },
-      { id: `${item.slug}-addon-2`, title: "Sides", price: 35, image: "/home/hero2.jpg" },
-      { id: `${item.slug}-addon-3`, title: "Desserts", price: 45, image: "/home/hero3.jpg" },
-    ],
+    addOns: homeAddOnTemplates.map((addOn, addOnIndex) => ({
+      id: `${item.slug}-addon-${addOnIndex + 1}`,
+      ...addOn,
+    })),
   };
 }
 
