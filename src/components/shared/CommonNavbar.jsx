@@ -91,6 +91,8 @@ export default function CommonNavbar() {
 
   const deliveryLabel = formatNavbarDate(selectedDate, selectedTime);
   const eventLabel = formatEventLabel(attendeeCount, eventName);
+  const hasDeliverySelection = Boolean(selectedDate || selectedTime);
+  const hasEventSelection = Boolean(attendeeCount > 0 || eventName.trim());
 
   const applyDeliverySelection = () => {
     setSelectedDate(draftDate);
@@ -122,11 +124,27 @@ export default function CommonNavbar() {
                 <button
                   type="button"
                   onClick={() => toggleDropdown("city")}
-                  className="type-subpara flex cursor-pointer h-full items-center gap-1.5  text-[#434343]"
+                  className={`type-subpara flex h-full cursor-pointer items-center gap-1.5 font-semibold transition ${
+                    openDropdown === "city" || selectedFilters.city !== "Bergen"
+                      ? "text-[#CF3A00]"
+                      : "text-[#434343]"
+                  }`}
                 >
-                  <FiMapPin className="text-[14x] text-[#8f8f8f]" />
+                  <FiMapPin
+                    className={`text-[14px] ${
+                      openDropdown === "city" || selectedFilters.city !== "Bergen"
+                        ? "text-[#CF3A00]"
+                        : "text-[#8f8f8f]"
+                    }`}
+                  />
                   <span className="text-[16px]">{selectedFilters.city}</span>
-                  <FiChevronDown className="text-[10px] text-[#8f8f8f] pl-12" />
+                  <FiChevronDown
+                    className={`pl-14 text-[10px] ${
+                      openDropdown === "city" || selectedFilters.city !== "Bergen"
+                        ? "text-[#CF3A00]"
+                        : "text-[#8f8f8f]"
+                    }`}
+                  />
                 </button>
 
                 <div className="h-4  w-px bg-[#e3ddd6]" />
@@ -134,13 +152,29 @@ export default function CommonNavbar() {
                 <button
                   type="button"
                   onClick={() => toggleDropdown("delivery")}
-                  className="type-subpara flex h-full cursor-pointer min-w-[165px] items-center justify-between gap-3 px-3 text-[#5d5d5d]"
+                  className={`type-subpara flex h-full min-w-[185px] cursor-pointer items-center justify-between gap-3 px-3 font-semibold transition ${
+                    openDropdown === "delivery" || hasDeliverySelection
+                      ? "text-[#CF3A00]"
+                      : "text-[#5d5d5d]"
+                  }`}
                 >
                   <span className="flex items-center gap-1.5">
-                    <FiCalendar className="text-[14px] text-[#8f8f8f]" />
+                    <FiCalendar
+                      className={`text-[14px] ${
+                        openDropdown === "delivery" || hasDeliverySelection
+                          ? "text-[#CF3A00]"
+                          : "text-[#8f8f8f]"
+                      }`}
+                    />
                     <span className="text-[16px]">{deliveryLabel}</span>
                   </span>
-                  <FiChevronDown className="shrink-0 text-[10px] text-[#8f8f8f]" />
+                  <FiChevronDown
+                    className={`shrink-0 text-[10px] ${
+                      openDropdown === "delivery" || hasDeliverySelection
+                        ? "text-[#CF3A00]"
+                        : "text-[#8f8f8f]"
+                    }`}
+                  />
                 </button>
 
                 <div className="h-4 w-px bg-[#e3ddd6]" />
@@ -148,10 +182,20 @@ export default function CommonNavbar() {
                 <button
                   type="button"
                   onClick={() => toggleDropdown("event")}
-                  className="type-subpara flex cursor-pointer h-full min-w-[165px] items-center justify-between gap-3 px-3 text-[#5d5d5d]"
+                  className={`type-subpara flex h-full min-w-[165px] cursor-pointer items-center justify-between gap-3 px-3 font-semibold transition ${
+                    openDropdown === "event" || hasEventSelection
+                      ? "text-[#CF3A00]"
+                      : "text-[#5d5d5d]"
+                  }`}
                 >
                   <span className="text-[16px]">{eventLabel}</span>
-                  <FiChevronDown className="shrink-0 text-[10px] text-[#8f8f8f]" />
+                  <FiChevronDown
+                    className={`shrink-0 text-[10px] ${
+                      openDropdown === "event" || hasEventSelection
+                        ? "text-[#CF3A00]"
+                        : "text-[#8f8f8f]"
+                    }`}
+                  />
                 </button>
               </div>
 

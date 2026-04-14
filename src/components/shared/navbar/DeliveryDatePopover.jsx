@@ -116,7 +116,7 @@ export default function DeliveryDatePopover({
         <button
           type="button"
           onClick={() => setShowEarlier((current) => !current)}
-          className="mb-2 inline-flex w-full cursor-pointer items-center justify-center gap-1 rounded-[8px] border border-[#d6cec4] px-3 py-1.5 text-[11px] font-medium text-black"
+          className="mb-2 inline-flex w-full cursor-pointer items-center justify-center gap-1 rounded-[8px] border border-[#d6cec4] px-3 py-1.5 text-[11px] font-semibold text-black"
         >
           <span>Earlier</span>
           <FiChevronDown
@@ -145,7 +145,7 @@ export default function DeliveryDatePopover({
         <button
           type="button"
           onClick={() => setShowLater((current) => !current)}
-          className={`inline-flex w-full cursor-pointer items-center justify-center gap-1 rounded-[8px] border border-[#d6cec4] px-3 py-1.5 text-[11px] font-medium text-black ${
+          className={`inline-flex w-full cursor-pointer items-center justify-center gap-1 rounded-[8px] border border-[#d6cec4] px-3 py-1.5 text-[11px] font-semibold text-black ${
             showEarlier ? "mt-3" : "mt-2"
           }`}
         >

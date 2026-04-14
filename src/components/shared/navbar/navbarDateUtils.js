@@ -1,8 +1,26 @@
 export const weekdayLabels = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
-export const earlierSlots = ["11:00 AM", "11:15 AM", "11:30 AM", "11:45 AM"];
+function buildQuarterHourSlots(startHour, endHour) {
+  const slots = [];
 
-export const laterSlots = ["1:00 PM", "1:15 PM", "1:30 PM", "1:45 PM"];
+  for (let hour = startHour; hour <= endHour; hour += 1) {
+    for (let minutes = 0; minutes < 60; minutes += 15) {
+      const date = new Date(2026, 0, 1, hour, minutes);
+      slots.push(
+        date.toLocaleTimeString("en-US", {
+          hour: "numeric",
+          minute: "2-digit",
+        }),
+      );
+    }
+  }
+
+  return slots;
+}
+
+export const earlierSlots = buildQuarterHourSlots(9, 12);
+
+export const laterSlots = buildQuarterHourSlots(13, 18);
 
 export function getMonthDays(viewDate) {
   const year = viewDate.getFullYear();
