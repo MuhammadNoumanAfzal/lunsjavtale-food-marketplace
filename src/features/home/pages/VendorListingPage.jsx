@@ -24,8 +24,8 @@ export default function VendorListingPage() {
   const hasMore = visibleCount < vendors.length;
 
   return (
-    <section className="bg-white px-4 py-8 sm:px-6 lg:px-8">
-      <div className="">
+    <section className="bg-white px-4 py-8 sm:px-6 lg:px-20">
+      <div className="mx-auto w-full max-w-7xl">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
           <div>
             <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-[#8b7d70]">

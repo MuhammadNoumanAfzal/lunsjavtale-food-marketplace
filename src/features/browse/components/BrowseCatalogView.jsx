@@ -33,10 +33,16 @@ export default function BrowseCatalogView({
   );
 
   return (
-    <section className="w-full px-4 py-12 ">
-      <BrowseTabs />
-      <BrowseCategoryStrip categories={categories} moreOptions={moreOptions} />
-      <BrowseFilterBar />
+    <section className="w-full px-20 py-12 ">
+      <div className="mx-auto w-full max-w-7xl">
+        <BrowseTabs />
+        <BrowseCategoryStrip
+          categories={categories}
+          moreOptions={moreOptions}
+        />
+        <BrowseFilterBar />
+      </div>
+
       <BrowseMenuSection
         title="Menu"
         items={paginatedItems}
@@ -44,7 +50,7 @@ export default function BrowseCatalogView({
       />
 
       {totalPages > 1 ? (
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
+        <div className="mx-auto mt-8 flex w-full max-w-7xl flex-wrap items-center justify-center gap-2">
           <button
             type="button"
             onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}
