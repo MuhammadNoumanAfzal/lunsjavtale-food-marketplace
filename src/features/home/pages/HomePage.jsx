@@ -14,10 +14,15 @@ export default function HomePage() {
     <div>
       <HeroSection />
       <FoodBrowsePreviewSection />
-      <VendorShowcaseSection title="Popular Vendors" vendors={popularVendors} />
+      <VendorShowcaseSection
+        title="Popular Vendors"
+        vendors={popularVendors}
+        seeAllHref="/vendors/popular"
+      />
       <VendorShowcaseSection
         title="Featured Vendors"
         vendors={featuredVendors}
+        seeAllHref="/vendors/featured"
       />
       <ProductShowcaseSection
         title="Popular Products"

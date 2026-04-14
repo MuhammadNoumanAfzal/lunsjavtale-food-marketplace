@@ -154,3 +154,22 @@ export const popularProducts = [
     discount: "40% Discount",
   },
 ];
+
+export function getVendorCollectionBySlug(slug) {
+  const collections = {
+    popular: {
+      title: "Popular Vendors",
+      description:
+        "Explore the vendors customers order from most often for everyday lunches and office catering.",
+      vendors: popularVendors,
+    },
+    featured: {
+      title: "Featured Vendors",
+      description:
+        "Browse our highlighted vendor partners with strong ratings, quality menus, and dependable delivery.",
+      vendors: featuredVendors,
+    },
+  };
+
+  return collections[slug] ?? null;
+}

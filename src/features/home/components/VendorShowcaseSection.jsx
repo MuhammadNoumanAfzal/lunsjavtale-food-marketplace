@@ -1,72 +1,31 @@
-import { FiStar } from "react-icons/fi";
-import { LiaBicycleSolid } from "react-icons/lia";
-import { useNavigate } from "react-router-dom";
-import { getMenuSlugByRestaurantName } from "../../menu/data/menuData";
+import { Link } from "react-router-dom";
+import VendorCard from "./VendorCard";
 
-function VendorItem({
-  image,
-  name,
-  rating,
-  deliveryTime,
-  deliveryFee,
-  discount,
-}) {
-  const navigate = useNavigate();
-  const menuSlug = getMenuSlugByRestaurantName(name);
+export default function VendorShowcaseSection({ title, vendors, seeAllHref }) {
+  const visibleVendors = vendors.slice(0, 3);
 
-  return (
-    <article
-      className="group cursor-pointer"
-      onClick={() => {
-        if (menuSlug) {
-          navigate(`/menu/${menuSlug}`);
-        }
-      }}
-    >
-      <div className="overflow-hidden rounded-[22px] bg-[#f2f2f2]">
-        <img
-          src={image}
-          alt={name}
-          className="h-[260px] w-full object-cover transition duration-300 group-hover:scale-105"
-        />
-      </div>
-
-      <div className="mt-2.5 flex items-start justify-between gap-3">
-        <h3 className="type-h4 truncate text-[#191919]">{name}</h3>
-
-        <div className="type-h6 flex shrink-0 items-center gap-1 text-[#2c2c2c]">
-          <FiStar className="text-[12px] fill-[#f4b400] text-[#f4b400]" />
-          <span>{rating}</span>
-        </div>
-      </div>
-
-      <div className="type-subpara mt-1 flex items-center gap-1.5 text-[#666]">
-        <span>{deliveryTime}</span>
-        <LiaBicycleSolid className="text-[12px] text-[#888]" />
-        <span>{deliveryFee}</span>
-      </div>
-
-      {discount ? (
-        <div className="type-subpara mt-1.5 inline-flex items-center rounded-full bg-[#fff1eb] px-2 py-1 text-[#ff6a3d]">
-          {discount}
-        </div>
-      ) : null}
-    </article>
-  );
-}
-
-export default function VendorShowcaseSection({ title, vendors }) {
   return (
     <section className=" px-4 py-6 sm:px-6 lg:px-8 bg-white">
       {title ? (
-        <h2 className="mb-4 type-h3 font-semibold text-[#191919] sm:text-xl">
-          {title}
-        </h2>
+        <div className="mb-4 flex items-center justify-between gap-4">
+          <h2 className="type-h3 font-semibold text-[#191919] sm:text-xl">
+            {title}
+          </h2>
+
+          {seeAllHref ? (
+            <Link
+              to={seeAllHref}
+              className="rounded-full border border-[#d7cec3] px-4 py-2 text-[13px] font-semibold text-[#2b2b2b] transition hover:border-[#c85f33] hover:text-[#c85f33]"
+            >
+              See all
+            </Link>
+          ) : null}
+        </div>
       ) : null}
 
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {vendors.map((vendor) => (
-          <VendorItem key={vendor.id ?? vendor.name} {...vendor} />
+        {visibleVendors.map((vendor) => (
+          <VendorCard key={vendor.id ?? vendor.name} {...vendor} />
         ))}
       </div>
     </section>

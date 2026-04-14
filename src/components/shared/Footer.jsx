@@ -26,7 +26,7 @@ const Footer = () => {
         <div>
           <Link to="/" className="inline-flex">
             <img
-              src="/home/logo-2.png"
+              src="/home/logo.png"
               alt="Lunsjavtale"
               className="h-14 w-auto object-contain"
             />
