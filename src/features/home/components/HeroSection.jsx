@@ -10,10 +10,10 @@ export default function HeroSection() {
         className="absolute inset-0 h-full w-full object-cover opacity-20"
       />
 
-      <div className="relative z-10">
+      <div className="relative z-10 ">
         <HomeNavbar />
 
-        <div className="grid min-h-[calc(100vh-88px)] items-center gap-12 px-5 py-10 md:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8 lg:py-14">
+        <div className="grid min-h-[calc(100vh-88px)] items-center gap-12 px-5 py-10 md:px-6 lg:grid-cols-2 lg:gap-16 lg:px-10 lg:py-14">
           <div className="max-w-2xl">
             <h1 className="type-h1 tracking-tight text-black">
               Order Lunch for

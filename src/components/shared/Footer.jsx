@@ -21,8 +21,8 @@ const footerGroups = [
 
 const Footer = () => {
   return (
-    <footer className="mt-12 bg-[#c95c32] text-white">
-      <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.3fr_repeat(3,1fr)] lg:px-8">
+    <footer className="mt-12 bg-[#c95c32] text-white px-10">
+      <div className="mx-auto grid  gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.3fr_repeat(3,1fr)] lg:px-8">
         <div>
           <Link to="/" className="inline-flex">
             <img
