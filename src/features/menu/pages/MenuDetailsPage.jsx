@@ -70,6 +70,12 @@ export default function MenuDetailsPage() {
                 setPersonCount((current) => Math.max(menu.minimumOrder, current - 1))
               }
               onIncrease={() => setPersonCount((current) => current + 1)}
+              onRemoveAddOn={(addOnId) =>
+                setAddOnQuantities((current) => ({
+                  ...current,
+                  [addOnId]: 0,
+                }))
+              }
             />
           </div>
 
