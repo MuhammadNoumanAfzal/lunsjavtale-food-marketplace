@@ -1,8 +1,28 @@
 import { useState } from "react";
-import { FiChevronDown, FiMapPin, FiStar } from "react-icons/fi";
+import {
+  FiChevronDown,
+  FiClock,
+  FiMapPin,
+  FiShoppingBag,
+  FiStar,
+  FiTruck,
+} from "react-icons/fi";
 
-function formatVendorDiscount(discount) {
-  return discount?.replace(/\s+on\s+selected\s+bundles?/i, "") ?? "";
+function InfoTile({ icon, label, title, subtitle }) {
+  return (
+    <div className="rounded-[16px] border border-[#eadfce] bg-[#fffaf5] p-3 sm:rounded-[18px] sm:p-4">
+      <div className="flex items-center gap-2 text-black">
+        {icon}
+        <span className="text-[13px] font-semibold">{label}</span>
+      </div>
+      <p className="mt-2 text-[16px] font-semibold leading-tight text-black sm:text-[18px]">
+        {title}
+      </p>
+      <p className="mt-1 text-[12px] leading-5 text-black sm:text-[13px]">
+        {subtitle}
+      </p>
+    </div>
+  );
 }
 
 export default function MenuDetailsContent({
@@ -10,6 +30,10 @@ export default function MenuDetailsContent({
   restaurant,
   personCount,
   onPersonCountChange,
+  deliveryDate,
+  deliveryTime,
+  onDeliveryDateChange,
+  onDeliveryTimeChange,
   note,
   onNoteChange,
 }) {
@@ -22,29 +46,38 @@ export default function MenuDetailsContent({
       <div className="border-b border-[#ddd6cd] pb-4">
         <h1 className="type-h2 leading-tight text-[#1f1f1f]">{menu.title}</h1>
 
-        <div className="mt-2">
-          <span className="type-subpara inline-flex rounded-full bg-[#e7e7e7] px-3 py-1 text-[#1f1f1f]">
+        <div className="mt-4">
+          <span className="inline-flex items-center gap-2 rounded-full bg-[#e7e7e7] px-3 py-1.5 text-[16px] font-bold sm:text-[20px]">
+            <FiShoppingBag className="shrink-0 text-[16px] text-[#cf6e38] sm:text-[18px]" />
             {restaurant.name}
           </span>
         </div>
 
-        <div className="mt-2 flex flex-wrap items-center gap-1.5">
-          <span className="type-subpara inline-flex items-center gap-1 rounded-full border border-[#d9d2ca] px-2 py-0.5 text-[#3a3a3a]">
-            <FiStar className="fill-[#f4b400] text-[#f4b400]" />
-            {menu.rating}
-          </span>
-          <span className="type-subpara inline-flex items-center gap-1 rounded-full border border-[#d9d2ca] px-2 py-0.5 text-[#3a3a3a]">
-            <FiMapPin className="text-[11px]" />
-            Bergen
-          </span>
-          <span className="type-subpara inline-flex rounded-full border border-[#d9d2ca] px-2 py-0.5 text-[#3a3a3a]">
-            Gluten free
-          </span>
-          {restaurant.discount ? (
-            <span className="type-subpara inline-flex rounded-full bg-[#fff1eb] px-2 py-0.5 text-[#CF3A00]">
-              {formatVendorDiscount(restaurant.discount)}
-            </span>
-          ) : null}
+        <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+          <InfoTile
+            icon={<FiStar className="fill-[#f4b400] text-[#f4b400]" />}
+            label="Rating"
+            title={`${menu.rating} / 5`}
+            subtitle="Top-rated vendor in this area"
+          />
+          <InfoTile
+            icon={<FiMapPin />}
+            label="Location"
+            title={restaurant.location}
+            subtitle={restaurant.distance}
+          />
+          <InfoTile
+            icon={<FiTruck />}
+            label="Delivery"
+            title={restaurant.deliveryFee}
+            subtitle={restaurant.discount}
+          />
+          <InfoTile
+            icon={<FiClock />}
+            label="Timing"
+            title={restaurant.deliveryTime}
+            subtitle={restaurant.cuisines.join(" | ")}
+          />
         </div>
 
         <div className="type-para mt-5 space-y-1 text-[#2b2b2b]">
@@ -128,8 +161,27 @@ export default function MenuDetailsContent({
 
       <div className="type-para border-b border-[#ddd6cd] py-6 text-[#1f1f1f]">
         <h3 className="type-h4 font-bold">Delivery Date &amp; Time</h3>
-        <p className="mt-2">Date: {menu.deliveryDate}</p>
-        <p className="mt-1">Time: {menu.deliveryWindow}</p>
+        <div className="mt-3 flex flex-col gap-3 sm:flex-row">
+          <label className="flex flex-col gap-1">
+            <span className="text-[13px] font-medium text-[#4b4b4b]">Date</span>
+            <input
+              type="date"
+              value={deliveryDate}
+              onChange={(event) => onDeliveryDateChange(event.target.value)}
+              className="rounded-[3px] border border-[#bfbfbf] bg-white px-3 py-2 text-[13px] outline-none"
+            />
+          </label>
+
+          <label className="flex flex-col gap-1">
+            <span className="text-[13px] font-medium text-[#4b4b4b]">Time</span>
+            <input
+              type="time"
+              value={deliveryTime}
+              onChange={(event) => onDeliveryTimeChange(event.target.value)}
+              className="rounded-[3px] border border-[#bfbfbf] bg-white px-3 py-2 text-[13px] outline-none"
+            />
+          </label>
+        </div>
 
         <h3 className="type-h4 mt-4 font-bold">Event Details</h3>
         <div className="mt-2 flex items-center gap-2">

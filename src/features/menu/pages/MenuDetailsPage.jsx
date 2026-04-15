@@ -33,8 +33,8 @@ export default function MenuDetailsPage() {
   const restaurant = menu.restaurant;
 
   return (
-    <section className="bg-[#fffdfa] px-3 py-4 text-black sm:px-6 sm:py-8 lg:px-8">
-      <div className=" w-full ">
+    <section className="bg-[#fffdfa] px-3 py-4 text-black sm:px-6 sm:py-8 lg:px-20">
+      <div className=" max-w-7xl mx-auto">
         <HeroSection
           title={menu.title}
           gallery={menu.gallery}
@@ -48,6 +48,10 @@ export default function MenuDetailsPage() {
               restaurant={restaurant}
               personCount={personCount}
               onPersonCountChange={setPersonCount}
+              deliveryDate={deliveryDate}
+              deliveryTime={deliveryTime}
+              onDeliveryDateChange={setDeliveryDate}
+              onDeliveryTimeChange={setDeliveryTime}
               note={vendorNote}
               onNoteChange={setVendorNote}
             />
@@ -71,7 +75,7 @@ export default function MenuDetailsPage() {
 
           <button
             type="button"
-            className="mt-4 w-full rounded-[2px] bg-[#cf6e38] px-4 py-1.5 text-[12px] font-bold text-white"
+            className="mt-4 w-full cursor-pointer rounded-[2px] bg-[#cf6e38] px-4 py-1.5 text-[16px] font-bold text-white"
           >
             Add to Cart
           </button>

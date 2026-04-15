@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { FiCheck, FiChevronDown, FiStar } from "react-icons/fi";
+import { FiCheck, FiChevronDown, FiStar, FiX } from "react-icons/fi";
 import {
   browseFilterChips,
   dietaryOptions,
@@ -165,7 +165,7 @@ function OtherFiltersModal({ otherFilters, setOtherFilters, onClose }) {
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/10 px-4">
       <div className="w-full max-w-[440px] rounded-[12px] border border-[#d9d9d9] bg-white p-3 shadow-[0_18px_40px_rgba(0,0,0,0.2)]">
-        <h1 className="type-h4 mb-3 text-black">Other Filters</h1>
+        <h1 className="type-h3 mb-3 text-black">Other Filters</h1>
         <div className="space-y-3">
           <label className="flex items-start gap-2  ">
             <input
@@ -295,6 +295,24 @@ function OtherFiltersModal({ otherFilters, setOtherFilters, onClose }) {
   );
 }
 
+function SelectedFilterChip({ label, onRemove, tone = "default" }) {
+  const toneClassName =
+    tone === "highlight"
+      ? "border-[#bfe5af] bg-[#d8f1ca] text-[#1f1f1f]"
+      : "border-[#e2dfda] bg-[#f3f1ee] text-[#1f1f1f]";
+
+  return (
+    <button
+      type="button"
+      onClick={onRemove}
+      className={`type-subpara inline-flex h-9 items-center gap-2 rounded-[10px] border px-3 transition hover:opacity-90 ${toneClassName}`}
+    >
+      <span>{label}</span>
+      <FiX className="text-[14px]" />
+    </button>
+  );
+}
+
 export default function BrowseFilterBar({
   variant = "default",
   onControlInteract,
@@ -323,17 +341,155 @@ export default function BrowseFilterBar({
   );
 
   const chipLabels = {
-    sort: selectedSort,
-    rating: selectedRating,
-    dietary:
-      selectedDietary.length > 0
-        ? `${selectedDietary.length} selected`
-        : "Dietary options",
-    offer:
-      selectedOffers.length > 0 ? `${selectedOffers.length} selected` : "Offer",
-    pricing: selectedPricing,
-    other:
-      otherFilterCount > 0 ? `${otherFilterCount} filters` : "Other Filters",
+    sort: "Sort by",
+    rating: "Ratings",
+    dietary: "Dietary options",
+    offer: "Offer",
+    pricing: "Pricing",
+    other: "Other Filters",
+  };
+
+  const selectedFilterChips = useMemo(() => {
+    const chips = [];
+
+    if (selectedSort !== "Sort by") {
+      chips.push({
+        id: `sort-${selectedSort}`,
+        label: selectedSort,
+        onRemove: () => setSelectedSort("Sort by"),
+      });
+    }
+
+    if (selectedRating !== "Ratings") {
+      chips.push({
+        id: `rating-${selectedRating}`,
+        label: selectedRating,
+        onRemove: () => setSelectedRating("Ratings"),
+        tone: "highlight",
+      });
+    }
+
+    selectedDietary.forEach((option) => {
+      chips.push({
+        id: `dietary-${option}`,
+        label: option,
+        onRemove: () =>
+          setSelectedDietary((current) =>
+            current.filter((item) => item !== option),
+          ),
+      });
+    });
+
+    selectedOffers.forEach((option) => {
+      chips.push({
+        id: `offer-${option}`,
+        label: option,
+        onRemove: () =>
+          setSelectedOffers((current) =>
+            current.filter((item) => item !== option),
+          ),
+      });
+    });
+
+    if (selectedPricing !== "Pricing") {
+      chips.push({
+        id: `pricing-${selectedPricing}`,
+        label: selectedPricing,
+        onRemove: () => setSelectedPricing("Pricing"),
+      });
+    }
+
+    if (otherFilters.individualPackaging) {
+      chips.push({
+        id: "other-individualPackaging",
+        label: "Individual packaging",
+        onRemove: () =>
+          setOtherFilters((current) => ({
+            ...current,
+            individualPackaging: false,
+          })),
+      });
+    }
+
+    if (otherFilters.newlyAdded) {
+      chips.push({
+        id: "other-newlyAdded",
+        label: "New",
+        onRemove: () =>
+          setOtherFilters((current) => ({
+            ...current,
+            newlyAdded: false,
+          })),
+      });
+    }
+
+    if (otherFilters.smallBusiness) {
+      chips.push({
+        id: "other-smallBusiness",
+        label: "Small business",
+        onRemove: () =>
+          setOtherFilters((current) => ({
+            ...current,
+            smallBusiness: false,
+          })),
+      });
+    }
+
+    if (otherFilters.budgetPerPerson) {
+      chips.push({
+        id: "other-budgetPerPerson",
+        label: `Budget ${otherFilters.budgetPerPerson}`,
+        onRemove: () =>
+          setOtherFilters((current) => ({
+            ...current,
+            budgetPerPerson: "",
+          })),
+      });
+    }
+
+    if (otherFilters.orderMinimum !== "Any price") {
+      chips.push({
+        id: `other-orderMinimum-${otherFilters.orderMinimum}`,
+        label: otherFilters.orderMinimum,
+        onRemove: () =>
+          setOtherFilters((current) => ({
+            ...current,
+            orderMinimum: "Any price",
+          })),
+      });
+    }
+
+    if (otherFilters.distance !== "Any distance") {
+      chips.push({
+        id: `other-distance-${otherFilters.distance}`,
+        label: otherFilters.distance,
+        onRemove: () =>
+          setOtherFilters((current) => ({
+            ...current,
+            distance: "Any distance",
+          })),
+      });
+    }
+
+    return chips;
+  }, [
+    otherFilters,
+    selectedDietary,
+    selectedOffers,
+    selectedPricing,
+    selectedRating,
+    selectedSort,
+  ]);
+
+  const clearAllFilters = () => {
+    setActiveFilters([]);
+    setOpenDropdown(null);
+    setSelectedSort("Sort by");
+    setSelectedRating("Ratings");
+    setSelectedDietary([]);
+    setSelectedOffers([]);
+    setSelectedPricing("Pricing");
+    setOtherFilters(createDefaultOtherFilters());
   };
 
   const toggleFilter = (key) => {
@@ -366,176 +522,199 @@ export default function BrowseFilterBar({
 
   return (
     <>
-      <div className={styles.containerClassName}>
-        <div className={styles.chipsWrapperClassName}>
-          {browseFilterChips.map((chip) => {
-            const isDropdownChip = DROPDOWN_CHIP_KEYS.has(chip.key);
-            const isActive =
-              activeFilters.includes(chip.key) ||
-              (chip.key === "sort" && selectedSort !== "Sort by") ||
-              (chip.key === "rating" && selectedRating !== "Ratings") ||
-              (chip.key === "dietary" && selectedDietary.length > 0) ||
-              (chip.key === "offer" && selectedOffers.length > 0) ||
-              (chip.key === "pricing" && selectedPricing !== "Pricing") ||
-              (chip.key === "other" && otherFilterCount > 0);
+      <div className="sticky top-[76px] z-30 bg-white/95 pb-2 backdrop-blur-[6px]">
+        <div className={styles.containerClassName}>
+          <div className={styles.chipsWrapperClassName}>
+            {browseFilterChips.map((chip) => {
+              const isDropdownChip = DROPDOWN_CHIP_KEYS.has(chip.key);
+              const isActive =
+                activeFilters.includes(chip.key) ||
+                (chip.key === "sort" && selectedSort !== "Sort by") ||
+                (chip.key === "rating" && selectedRating !== "Ratings") ||
+                (chip.key === "dietary" && selectedDietary.length > 0) ||
+                (chip.key === "offer" && selectedOffers.length > 0) ||
+                (chip.key === "pricing" && selectedPricing !== "Pricing") ||
+                (chip.key === "other" && otherFilterCount > 0);
 
-            return (
-              <div key={chip.key} className="relative min-w-0 flex-1">
-                <button
-                  onClick={() => handleChipClick(chip.key)}
-                  className={`type-subpara cursor-pointer inline-flex h-10 w-full items-center justify-between gap-2 rounded-full border px-3 transition xl:px-4 ${
-                    isActive
-                      ? "border-[#CF3A00] bg-[#fff1eb] text-[#CF3A00]"
-                      : styles.inactiveChipClassName
-                  }`}
-                >
-                  <span className="flex w-3 shrink-0 justify-center">
-                    {chip.icon === "star" ? (
-                      <FiStar className="text-[11px] text-[#d5aa22]" />
+              return (
+                <div key={chip.key} className="relative min-w-0 flex-1">
+                  <button
+                    onClick={() => handleChipClick(chip.key)}
+                    className={`type-subpara font-semibold cursor-pointer inline-flex h-10 w-full items-center justify-between gap-2 rounded-full border px-3 text-[30px] font-medium transition xl:px-4 ${
+                      isActive  
+                        ? "border-[#CF3A00] bg-[#fff1eb] text-[#CF3A00]"
+                        : styles.inactiveChipClassName
+                    }`}
+                  >
+                    <span className="flex w-3 shrink-0 justify-center">
+                      {chip.icon === "star" ? (
+                        <FiStar className="text-[11px] text-[#d5aa22]" />
+                      ) : null}
+                    </span>
+
+                    <span className="truncate">
+                      {chipLabels[chip.key] ?? chip.label}
+                    </span>
+
+                    {isDropdownChip ? (
+                      <FiChevronDown className="shrink-0 text-[16px]" />
                     ) : null}
-                  </span>
+                  </button>
 
-                  <span className="truncate">
-                    {chipLabels[chip.key] ?? chip.label}
-                  </span>
-
-                  {isDropdownChip ? (
-                    <FiChevronDown className="shrink-0 text-[16px]" />
+                  {chip.key === "sort" && openDropdown === "sort" ? (
+                    <FilterDropdown
+                      minWidthClassName="min-w-[190px]"
+                      onClear={() => {
+                        setSelectedSort("Sort by");
+                        setOpenDropdown(null);
+                      }}
+                    >
+                      {sortByOptions.map((option) => (
+                        <button
+                          key={option}
+                          onClick={() => {
+                            setSelectedSort(option);
+                            setOpenDropdown(null);
+                          }}
+                          className="type-para block w-full rounded-[8px] px-3 py-2 text-left text-black transition hover:bg-[#f7f2ec]"
+                        >
+                          {option}
+                        </button>
+                      ))}
+                    </FilterDropdown>
                   ) : null}
-                </button>
 
-                {chip.key === "sort" && openDropdown === "sort" ? (
-                  <FilterDropdown
-                    minWidthClassName="min-w-[190px]"
-                    onClear={() => {
-                      setSelectedSort("Sort by");
-                      setOpenDropdown(null);
-                    }}
-                  >
-                    {sortByOptions.map((option) => (
-                      <button
-                        key={option}
-                        onClick={() => {
-                          setSelectedSort(option);
-                          setOpenDropdown(null);
-                        }}
-                        className="type-para block w-full rounded-[8px] px-3 py-2 text-left text-black transition hover:bg-[#f7f2ec]"
-                      >
-                        {option}
-                      </button>
-                    ))}
-                  </FilterDropdown>
-                ) : null}
-
-                {chip.key === "rating" && openDropdown === "rating" ? (
-                  <FilterDropdown
-                    minWidthClassName="min-w-[190px]"
-                    onClear={() => {
-                      setSelectedRating("Ratings");
-                      setOpenDropdown(null);
-                    }}
-                  >
-                    {ratingOptions.map((option, index) => (
-                      <button
-                        key={option}
-                        onClick={() => {
-                          setSelectedRating(option);
-                          setOpenDropdown(null);
-                        }}
-                        className="type-para flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-left text-black transition hover:bg-[#f7f2ec]"
-                      >
-                        <span className="flex items-center gap-1 text-[#d5aa22]">
-                          <span className="text-black">{5 - index}</span>
-                          <FiStar className="text-[11px] fill-[#d5aa22]" />
-                        </span>
-                        <span>{option.replace(/^\d+\s*/, "")}</span>
-                      </button>
-                    ))}
-                  </FilterDropdown>
-                ) : null}
-
-                {chip.key === "dietary" && openDropdown === "dietary" ? (
-                  <FilterDropdown
-                    minWidthClassName="min-w-[190px]"
-                    onClear={() => {
-                      setSelectedDietary([]);
-                      setOpenDropdown(null);
-                    }}
-                  >
-                    {dietaryOptions.map((option) => {
-                      const isSelected = selectedDietary.includes(option);
-
-                      return (
+                  {chip.key === "rating" && openDropdown === "rating" ? (
+                    <FilterDropdown
+                      minWidthClassName="min-w-[190px]"
+                      onClear={() => {
+                        setSelectedRating("Ratings");
+                        setOpenDropdown(null);
+                      }}
+                    >
+                      {ratingOptions.map((option, index) => (
                         <button
                           key={option}
-                          onClick={() =>
-                            toggleMultiSelect(setSelectedDietary, option)
-                          }
+                          onClick={() => {
+                            setSelectedRating(option);
+                            setOpenDropdown(null);
+                          }}
                           className="type-para flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-left text-black transition hover:bg-[#f7f2ec]"
                         >
-                          <MultiSelectIndicator isSelected={isSelected} />
-                          <span>{option}</span>
+                          <span className="flex items-center gap-1 text-[#d5aa22]">
+                            <span className="text-black">{5 - index}</span>
+                            <FiStar className="text-[11px] fill-[#d5aa22]" />
+                          </span>
+                          <span>{option.replace(/^\d+\s*/, "")}</span>
                         </button>
-                      );
-                    })}
-                  </FilterDropdown>
-                ) : null}
+                      ))}
+                    </FilterDropdown>
+                  ) : null}
 
-                {chip.key === "offer" && openDropdown === "offer" ? (
-                  <FilterDropdown
-                    minWidthClassName="min-w-[250px]"
-                    onClear={() => {
-                      setSelectedOffers([]);
-                      setOpenDropdown(null);
-                    }}
-                  >
-                    {offerOptions.map((option) => {
-                      const isSelected = selectedOffers.includes(option);
+                  {chip.key === "dietary" && openDropdown === "dietary" ? (
+                    <FilterDropdown
+                      minWidthClassName="min-w-[190px]"
+                      onClear={() => {
+                        setSelectedDietary([]);
+                        setOpenDropdown(null);
+                      }}
+                    >
+                      {dietaryOptions.map((option) => {
+                        const isSelected = selectedDietary.includes(option);
 
-                      return (
+                        return (
+                          <button
+                            key={option}
+                            onClick={() =>
+                              toggleMultiSelect(setSelectedDietary, option)
+                            }
+                            className="type-para flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-left text-black transition hover:bg-[#f7f2ec]"
+                          >
+                            <MultiSelectIndicator isSelected={isSelected} />
+                            <span>{option}</span>
+                          </button>
+                        );
+                      })}
+                    </FilterDropdown>
+                  ) : null}
+
+                  {chip.key === "offer" && openDropdown === "offer" ? (
+                    <FilterDropdown
+                      minWidthClassName="min-w-[250px]"
+                      onClear={() => {
+                        setSelectedOffers([]);
+                        setOpenDropdown(null);
+                      }}
+                    >
+                      {offerOptions.map((option) => {
+                        const isSelected = selectedOffers.includes(option);
+
+                        return (
+                          <button
+                            key={option}
+                            onClick={() =>
+                              toggleMultiSelect(setSelectedOffers, option)
+                            }
+                            className="type-para flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-left text-black transition hover:bg-[#f7f2ec]"
+                          >
+                            <MultiSelectIndicator isSelected={isSelected} />
+                            <span>{option}</span>
+                          </button>
+                        );
+                      })}
+                    </FilterDropdown>
+                  ) : null}
+
+                  {chip.key === "pricing" && openDropdown === "pricing" ? (
+                    <FilterDropdown
+                      minWidthClassName="min-w-[190px]"
+                      onClear={() => {
+                        setSelectedPricing("Pricing");
+                        setOpenDropdown(null);
+                      }}
+                    >
+                      {pricingOptions.map((option) => (
                         <button
                           key={option}
-                          onClick={() =>
-                            toggleMultiSelect(setSelectedOffers, option)
-                          }
-                          className="type-para flex w-full items-center gap-2 rounded-[8px] px-3 py-2 text-left text-black transition hover:bg-[#f7f2ec]"
+                          onClick={() => {
+                            setSelectedPricing(option);
+                            setOpenDropdown(null);
+                          }}
+                          className="type-para block w-full rounded-[8px] px-3 py-2 text-left text-black transition hover:bg-[#f7f2ec]"
                         >
-                          <MultiSelectIndicator isSelected={isSelected} />
-                          <span>{option}</span>
+                          {option}
                         </button>
-                      );
-                    })}
-                  </FilterDropdown>
-                ) : null}
+                      ))}
+                    </FilterDropdown>
+                  ) : null}
+                </div>
+              );
+            })}
+          </div>
 
-                {chip.key === "pricing" && openDropdown === "pricing" ? (
-                  <FilterDropdown
-                    minWidthClassName="min-w-[190px]"
-                    onClear={() => {
-                      setSelectedPricing("Pricing");
-                      setOpenDropdown(null);
-                    }}
-                  >
-                    {pricingOptions.map((option) => (
-                      <button
-                        key={option}
-                        onClick={() => {
-                          setSelectedPricing(option);
-                          setOpenDropdown(null);
-                        }}
-                        className="type-para block w-full rounded-[8px] px-3 py-2 text-left text-black transition hover:bg-[#f7f2ec]"
-                      >
-                        {option}
-                      </button>
-                    ))}
-                  </FilterDropdown>
-                ) : null}
-              </div>
-            );
-          })}
+          <button className={styles.applyButtonClassName}>Apply</button>
         </div>
 
-        <button className={styles.applyButtonClassName}>Apply</button>
+        {selectedFilterChips.length > 0 ? (
+          <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-[#efe9e2] pt-3">
+            {selectedFilterChips.map((chip) => (
+              <SelectedFilterChip
+                key={chip.id}
+                label={chip.label}
+                onRemove={chip.onRemove}
+                tone={chip.tone}
+              />
+            ))}
+
+            <button
+              type="button"
+              onClick={clearAllFilters}
+              className="type-subpara inline-flex h-9 items-center rounded-full border border-[#c9c4be] bg-white px-4 text-[#1f1f1f] transition hover:bg-[#f7f2ec]"
+            >
+              Clear all filters
+            </button>
+          </div>
+        ) : null}
       </div>
 
       {openDropdown === "other" ? (

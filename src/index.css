@@ -11,6 +11,8 @@
   --font-h6-size: 14px;
   --font-para-size: 16px;
   --font-subpara-size: 12px;
+    --font-fiter-size: 14px;
+
 
 }
 
@@ -82,3 +84,4 @@ textarea {
   font-weight: 600;
   line-height: 1.45;
 }
+

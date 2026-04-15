@@ -5,7 +5,7 @@ export default function HeroSection({ title, gallery, restaurant }) {
   const navigate = useNavigate();
 
   return (
-    <section className="relative w-full overflow-hidden rounded-[14px] bg-[#f3eee8] shadow-[0_14px_36px_rgba(37,24,8,0.1)]">
+    <section className="relative w-full overflow-hidden rounded-t-[14px] bg-[#f3eee8] shadow-[0_14px_36px_rgba(37,24,8,0.1)]">
       <img
         src={gallery[0]}
         alt={title}
