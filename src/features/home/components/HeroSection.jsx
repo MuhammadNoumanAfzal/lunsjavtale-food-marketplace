@@ -13,7 +13,7 @@ export default function HeroSection() {
       <div className="relative z-10">
         <HomeNavbar />
 
-        <div className="grid min-h-[calc(100vh-88px)] items-center gap-12 px-5 py-10 md:px-6 lg:grid-cols-2 lg:px-8 lg:py-14">
+        <div className="grid min-h-[calc(100vh-88px)] items-center gap-12 px-5 py-10 md:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8 lg:py-14">
           <div className="max-w-2xl">
             <h1 className="type-h1 tracking-tight text-black">
               Order Lunch for
@@ -50,50 +50,17 @@ export default function HeroSection() {
             </div>
           </div>
 
-          <div className="relative mx-auto flex w-full max-w-[560px] items-center justify-center">
-            <div className="relative h-[320px] w-full sm:h-[420px] lg:h-[500px]">
-              <div className="absolute left[20%] -lg:left-[0%] top-[6%] h-[140px] w-[180px] overflow-hidden rounded-[28px] shadow-xl sm:h-[180px] sm:w-[230px] lg:h-[250px] lg:w-[260px]">
-                <img
-                  src="/home/hero1.jpg"
-                  alt="Food platter"
-                  className="h-full w-full object-cover"
-                />
-              </div>
-
-              <div className="absolute -right-[1%] top-[18%] z-[10] h-[150px] w-[190px] overflow-hidden rounded-[30px] shadow-xl sm:h-[200px] sm:w-[240px] lg:h-[250px] lg:w-[250px]">
-                <img
-                  src="/home/hero2.jpg"
-                  alt="Meal dishes"
-                  className="h-full w-full object-cover"
-                />
-              </div>
-
-              <div
-                className="absolute left-[50%] -bottom-[10%] h-[150px] w-[205px] -translate-x-1/2 overflow-hidden filter drop-shadow-xl sm:h-[200px] sm:w-[250px] lg:h-[260px] lg:w-[290px]"
-                style={{ clipPath: "url(#liquidNotch)" }}
-              >
-                <img
-                  src="/home/hero3.jpg"
-                  alt="People eating together"
-                  className="h-full w-full object-cover"
-                />
-              </div>
-
-              <div className="absolute right-[30%] top-[8%] z-[100] flex h-22 w-22 -translate-x-1/2 items-center justify-center rounded-full border-[10px]  bg-[#c85f33] text-[#c85f33] shadow-2xl sm:h-24 sm:w-24">
-                <FiArrowDownLeft className="text-3xl sm:text-4xl text-white" />
-              </div>
+          <div className="flex w-full items-center justify-center">
+            <div className="relative w-full">
+              <img
+                src="/home/home-hero.png"
+                alt="Home hero"
+                className="h-[320px] w-full object-contain sm:h-[420px] lg:h-[560px]"
+              />
             </div>
           </div>
         </div>
       </div>
-
-      <svg width="0" height="0" className="absolute">
-        <defs>
-          <clipPath id="liquidNotch" clipPathUnits="objectBoundingBox">
-            <path d="M0.1,0 L0.38,0 C0.45,0 0.48,0.02 0.48,0.1 L0.48,0.12 C0.48,0.18 0.52,0.22 0.58,0.22 L0.9,0.22 C0.98,0.22 1,0.24 1,0.32 L1,0.9 C1,0.98 0.98,1 0.9,1 L0.1,1 C0.02,1 0,0.98 0,0.9 L0,0.1 C0,0.02 0.02,0 0.1,0 Z" />
-          </clipPath>
-        </defs>
-      </svg>
     </section>
   );
 }
